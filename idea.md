@@ -60,3 +60,10 @@ Healthy(peak 0, end 30), mild Severe(start in 20, peak 50 , end 80), Severe(peak
 |2|2|0|4|
 |2|2|1|5|
 |2|2|2|6|
+
+# todos
+- [ ] age -> type 2  -- Leo 
+- [ ] do research on headache. Adjust Linguistic terms, determine type1 or type2  -- Aidan
+- [ ] temperature, find the evidence  -- Aidan
+- [ ] urgency, find the evidence. But we have backup statement (Optional)
+- [ ] skfuzzy -> JuzzyPython   -- Leo
