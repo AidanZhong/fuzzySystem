@@ -67,3 +67,6 @@ Healthy(peak 0, end 30), mild Severe(start in 20, peak 50 , end 80), Severe(peak
 - [ ] temperature, find the evidence  -- Aidan
 - [ ] urgency, find the evidence. But we have backup statement (Optional)
 - [ ] skfuzzy -> JuzzyPython   -- Leo
+
+# Juzzy lib resources
+https://github.com/LUCIDresearch/JuzzyPython/tree/main
