@@ -70,3 +70,22 @@ Healthy(peak 0, end 30), mild Severe(start in 20, peak 50 , end 80), Severe(peak
 
 # Juzzy lib resources
 https://github.com/LUCIDresearch/JuzzyPython/tree/main
+
+# Age refs
+young upper:
+https://www.cdc.gov/mmwr/volumes/70/wr/mm7025e2.htm
+
+young lower:
+https://ils.unc.edu/courses/2020_fall/inls558_001/adultdevelopment.pdf
+
+mid upper: 
+https://dictionary.cambridge.org/dictionary/english/middle-age
+
+mid lower: 
+https://www.britannica.com/science/middle-age
+
+old upper:
+https://www.myguideforseniors.com/what-age-is-considered-senior-citizen/
+
+old lower:
+https://pubmed.ncbi.nlm.nih.gov/1727842/
