@@ -93,3 +93,24 @@ https://www.myguideforseniors.com/what-age-is-considered-senior-citizen/2020_fal
 
 old lower:
 https://pubmed.ncbi.nlm.nih.gov/1727842/
+
+urgency:
+https://www.england.nhs.uk/guidance-for-emergency-departments-initial-assessment/
+
+# Data sample
+1. T = 36.5, H = 0, A = 25
+2. T = 36.5, H = 0, A = 100
+
+3. T = 38, H = 0, A = 25
+4. T = 38, H = 0, A = 70
+
+5. T = 36.5, H = 6, A = 40
+6. T = 36.5, H = 6, A = 70
+
+7. T = 30, H = 0, A = 10
+8. T = 30, H = 0, A = 55
+
+9. T = 27, H = 9, A = 25
+10. T = 36.5, H = 2, A = 60
+
+
