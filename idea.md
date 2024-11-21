@@ -62,92 +62,55 @@ Healthy(peak 0, end 30), mild Severe(start in 20, peak 50 , end 80), Severe(peak
 |2|2|2|6|
 
 # todos
-- [ ] age -> type 2  -- Leo 
+- [x] age -> type 2  -- Leo 
 - [x] do research on headache. Adjust Linguistic terms, determine type1 or type2  -- Aidan
 - [x] temperature, find the evidence  -- Aidan
-- [ ] urgency, find the evidence. But we have backup statement (Optional)
-- [ ] skfuzzy -> JuzzyPython   -- Leo
+- [ ] urgency, find the evidence. But we have backup statement -- Leo
+- [x] skfuzzy -> JuzzyPython   -- Leo 
+- [ ] Adjust Rulebase - Leo
+- [ ] interval input -- Aidan
+- [ ] example data -- Leo 
 
-## headache research
-Subjective, so need type2 fuzzy set!
-1. Visual Analog Scale (VAS)
 
-	•	A simple scale where patients rate their headache intensity on a scale of 0 to 10, with:
-	•	0: No pain
-	•	10: Worst possible pain
-	•	This is subjective but widely used to understand the patient’s perception of pain.
+# Juzzy lib resources
+https://github.com/LUCIDresearch/JuzzyPython/tree/main
 
-2. Numeric Rating Scale (NRS)
+# Age refs
+young upper:
+https://www.cdc.gov/mmwr/volumes/70/wr/mm7025e2.htm
 
-	•	Similar to VAS but uses integers (e.g., 0–10 or 0–100) to rate the pain.
-	•	Commonly used in clinical and research settings for simplicity.
+young lower:
+https://ils.unc.edu/courses/2020_fall/inls558_001/adultdevelopment.pdf
 
-3. Headache Diaries
+mid upper: 
+https://dictionary.cambridge.org/dictionary/english/middle-age
 
-	•	Patients record details about their headaches, including:
-	•	Intensity
-	•	Frequency
-	•	Duration
-	•	Triggers
-	•	Medication usage
-	•	Useful for identifying patterns and treatment efficacy.
+mid lower: 
+https://www.britannica.com/science/middle-age
 
-4. Headache Impact Test (HIT-6)
+old upper:
+https://www.myguideforseniors.com/what-age-is-considered-senior-citizen/2020_fall
 
-	•	A questionnaire assessing the impact of headaches on daily life, including:
-	•	Social functioning
-	•	Work productivity
-	•	Emotional well-being
-	•	Scores range from 36 to 78, with higher scores indicating greater impact.
+old lower:
+https://pubmed.ncbi.nlm.nih.gov/1727842/
 
-5. Migraine Disability Assessment Test (MIDAS)
+urgency:
+https://www.england.nhs.uk/guidance-for-emergency-departments-initial-assessment/
 
-	•	Focuses on the disability caused by migraines.
-	•	Patients answer questions about missed work or school, reduced productivity, and missed social events due to migraines over the past 3 months.
-	•	The score categorizes the level of disability (mild, moderate, or severe).
+# Data sample
+1. T = 36.5, H = 0, A = 25
+2. T = 36.5, H = 0, A = 100
 
-6. International Classification of Headache Disorders (ICHD)
+3. T = 38, H = 0, A = 25
+4. T = 38, H = 0, A = 70
 
-	•	A diagnostic tool by the International Headache Society (IHS).
-	•	Helps classify headaches into primary (e.g., migraine, tension-type headache) and secondary types based on specific criteria.
+5. T = 36.5, H = 6, A = 40
+6. T = 36.5, H = 6, A = 70
 
-7. Pain Quality Assessment Scale (PQAS)
+7. T = 30, H = 0, A = 10
+8. T = 30, H = 0, A = 55
 
-	•	Evaluates the quality of headache pain (e.g., throbbing, stabbing, dull).
-	•	Useful for understanding the nature of the pain.
+9. T = 27, H = 9, A = 25
+10. T = 36.5, H = 2, A = 60
 
-8. Functional Disability Scale (FDS)
 
-	•	Assesses how much headaches interfere with daily activities (e.g., personal care, work, leisure).
-
-Objective Measurements (Rare)
-
-Although headaches are subjective, in some cases, objective measurements like neuroimaging (MRI/CT) or EEG may help identify underlying causes, particularly for secondary headaches due to structural or neurological issues.
-
-These methods are often combined to provide a comprehensive understanding of the headache and guide treatment plans effectively.
-
-## temperature evidence
-
-Normal Body Temperature: [link](https://health.clevelandclinic.org/body-temperature-what-is-and-isnt-normal)
-
--	Average Range: Traditionally, the average normal body temperature is considered to be 98.6°F (37°C). However, recent studies suggest that the average body temperature has decreased over time, with current averages around 97.5°F to 97.9°F (36.4°C to 36.6°C). (Cleveland Clinic Health)
--	Measurement Variations:
--	Oral: Approximately 97.8°F (36.6°C). (Healthgrades Resources)
--	Rectal: Slightly higher than oral readings, around 98.6°F (37°C).
--	Axillary (underarm): Slightly lower than oral readings, around 96.8°F (36°C).
-
-Cold (Hypothermia): [link](https://www.uptodate.com/contents/hypothermia-the-basics)
-
--	Definition: Hypothermia occurs when body temperature drops below 95°F (35°C). (UpToDate)
--	Severity Levels:
--	Mild Hypothermia: 32°C to 35°C (89.6°F to 95°F). (MSD Manuals)
--	Moderate Hypothermia: 28°C to 32°C (82.4°F to 89.6°F).
--	Severe Hypothermia: Below 28°C (82.4°F).
-
-Hot (Fever and Hyperthermia): [link](https://www.webmd.com/first-aid/normal-body-temperature)
-
--	Fever: Generally defined as a body temperature above 100.4°F (38°C). (WebMD)
--	Hyperthermia: An abnormally high body temperature not caused by a fever, often due to external factors like heat exposure. Hyperthermia can be classified as:
--	Mild: 37.5°C to 38°C (99.5°F to 100.4°F).
--	Moderate: 38.1°C to 38.5°C (100.6°F to 101.3°F).
--	Severe: Above 38.5°C (101.3°F). (EmCrit)
