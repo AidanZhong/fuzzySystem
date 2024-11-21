@@ -2,6 +2,7 @@ from juzzyPython.generic.Tuple import Tuple
 from juzzyPython.generic.Output import Output
 from juzzyPython.generic.Input import Input
 from juzzyPython.generic.Plot import Plot
+from juzzyPython.type1.sets.T1MF_Interface import T1MF_Interface
 from juzzyPython.generalType2zSlices.system.GenT2_Rule import GenT2_Rule
 from juzzyPython.generalType2zSlices.system.GenT2_Rulebase import GenT2_Rulebase
 from juzzyPython.generalType2zSlices.system.GenT2_Antecedent import GenT2_Antecedent
@@ -12,10 +13,12 @@ from juzzyPython.generalType2zSlices.sets.GenT2MF_Trapezoidal import GenT2MF_Tra
 from juzzyPython.type1.sets.T1MF_Gaussian import T1MF_Gaussian
 from juzzyPython.intervalType2.sets.IntervalT2MF_Gaussian import IntervalT2MF_Gaussian
 from juzzyPython.generalType2zSlices.sets.GenT2MF_Gaussian import GenT2MF_Gaussian
+import matplotlib.pyplot as plt
 
 class Case1:
     def __init__(self,unit = False) -> None:
-        self.numberOfzLevels = 8
+        self.numberOfzLevels = 4
+    
 
         # Inputs to the FLS
         self.temperature = Input("temperature",Tuple(24,44))
@@ -49,15 +52,15 @@ class Case1:
         SlightlyIT2MF = IntervalT2MF_Trapezoidal("IT2MF for slightly headache",SlightlyUMF,SlightlyLMF)
         SlightlyMF = GenT2MF_Trapezoidal("GT2MF for slightly headache", primer = SlightlyIT2MF, numberOfzLevels = self.numberOfzLevels)
         
-        MildHUMF = T1MF_Gaussian("Upper MF for mild headache", 5.0, 1)
-        MildHLMF = T1MF_Gaussian("Lower MF for mild headache", 5.0, 0.5)
-        MildHIT2MF = IntervalT2MF_Gaussian("IT2MF for mild headache",MildHUMF,MildHLMF)
-        MildHMF = GenT2MF_Gaussian("GT2MF for mild headache", primer = MildHIT2MF, numberOfzLevels = self.numberOfzLevels)
+        MildUMF = T1MF_Gaussian("Upper MF for mild headache", 5.0, 1)
+        MildLMF = T1MF_Gaussian("Lower MF for mild headache", 5.0, 0.5)
+        MildIT2MF = IntervalT2MF_Gaussian("IT2MF for mild headache",MildUMF,MildLMF)
+        MildMF = GenT2MF_Gaussian("GT2MF for mild headache", primer = MildIT2MF, numberOfzLevels = self.numberOfzLevels)
         
-        SevereHUMF = T1MF_Trapezoidal("Upper MF for severe headache", [5.0, 7.0, 10.0, 10.0])
-        SevereHLMF = T1MF_Trapezoidal("Lower MF for severe headache", [5.0, 8.0, 10.0, 10.0])
-        SevereHIT2MF = IntervalT2MF_Trapezoidal("IT2MF for severe headache",SevereHUMF,SevereHLMF)
-        SevereHMF = GenT2MF_Trapezoidal("GT2MF for severe headache", primer = SevereHIT2MF, numberOfzLevels = self.numberOfzLevels)
+        SevereUMF = T1MF_Trapezoidal("Upper MF for severe headache", [5.0, 7.0, 10.0, 10.0])
+        SevereLMF = T1MF_Trapezoidal("Lower MF for severe headache", [5.0, 8.0, 10.0, 10.0])
+        SevereIT2MF = IntervalT2MF_Trapezoidal("IT2MF for severe headache",SevereUMF,SevereLMF)
+        SevereMF = GenT2MF_Trapezoidal("GT2MF for severe headache", primer = SevereIT2MF, numberOfzLevels = self.numberOfzLevels)
 
         # Age
         YoungUMF = T1MF_Trapezoidal("Upper MF for young age", [0.0, 0.0, 22.0, 45.0])
@@ -66,7 +69,7 @@ class Case1:
         YoungMF = GenT2MF_Trapezoidal("GT2MF for young age", primer = YoungIT2MF, numberOfzLevels = self.numberOfzLevels)
 
         MidUMF = T1MF_Trapezoidal("Upper MF for mid age", [40.0, 45.0, 60.0, 65.0])
-        MidLMF = T1MF_Trapezoidal("Lower MF for mid age", [45.0, 45.0, 60.0, 60.0])
+        MidLMF = T1MF_Trapezoidal("Lower MF for mid age", [45.0, 45.001, 60.0, 60.001])
         MidIT2MF = IntervalT2MF_Trapezoidal("IT2MF for mid age",MidUMF,MidLMF)
         MidMF = GenT2MF_Trapezoidal("GT2MF for mid age", primer = MidIT2MF, numberOfzLevels = self.numberOfzLevels)
 
@@ -75,43 +78,34 @@ class Case1:
         OldIT2MF = IntervalT2MF_Trapezoidal("IT2MF for old age",OldUMF,OldLMF)
         OldMF = GenT2MF_Trapezoidal("GT2MF for old age", primer = OldIT2MF, numberOfzLevels = self.numberOfzLevels)
 
-        # Urgency
+        # Urgency Levels
         number_of_labels = 5
         seg = 100 / (2 * number_of_labels - 1)
-        StableUMF = T1MF_Trapezoidal("Upper MF for stable level", [0.0, 0.0, seg+0.001, 2 * seg])
-        StableLMF = T1MF_Trapezoidal("Lower MF for stable level", [0.0, 0.0, seg, 2 * seg])
-        StableIT2MF = IntervalT2MF_Trapezoidal("IT2MF for stable level",StableUMF,StableLMF)
-        StableMF = GenT2MF_Trapezoidal("GT2MF for stable level", primer = StableIT2MF, numberOfzLevels = self.numberOfzLevels)
 
-        MildUMF = T1MF_Trapezoidal("Upper MF for mild level", [seg, 2 * seg, 3 * seg+0.001, 4 * seg])
-        MildLMF = T1MF_Trapezoidal("Lower MF for mild level", [seg, 2 * seg, 3 * seg, 4 * seg])
-        MildIT2MF = IntervalT2MF_Trapezoidal("IT2MF for mild level",MildUMF,MildLMF)
-        MildMF = GenT2MF_Trapezoidal("GT2MF for mild level", primer = MildIT2MF, numberOfzLevels = self.numberOfzLevels)
+        LowUMF = T1MF_Trapezoidal("Upper MF for low urgency", [0.0, 0.0, seg + 0.001, 2 * seg])
+        LowLMF = T1MF_Trapezoidal("Lower MF for low urgency", [0.0, 0.0, seg, 2 * seg])
+        LowIT2MF = IntervalT2MF_Trapezoidal("IT2MF for low urgency", LowUMF, LowLMF)
+        LowMF = GenT2MF_Trapezoidal("GT2MF for low urgency", primer=LowIT2MF, numberOfzLevels=self.numberOfzLevels)
 
-        ModerateUMF = T1MF_Trapezoidal("Upper MF for moderate level", [3 * seg, 4 * seg, 5 * seg+0.001, 6 * seg])
-        ModerateLMF = T1MF_Trapezoidal("Lower MF for moderate level", [3 * seg, 4 * seg, 5 * seg, 6 * seg])
-        ModerateIT2MF = IntervalT2MF_Trapezoidal("IT2MF for moderate level",ModerateUMF,ModerateLMF)
-        ModerateMF = GenT2MF_Trapezoidal("GT2MF for moderate level", primer = ModerateIT2MF, numberOfzLevels = self.numberOfzLevels)
+        MediumUMF = T1MF_Trapezoidal("Upper MF for medium urgency", [seg, 2 * seg, 3 * seg + 0.001, 4 * seg])
+        MediumLMF = T1MF_Trapezoidal("Lower MF for medium urgency", [seg, 2 * seg, 3 * seg, 4 * seg])
+        MediumIT2MF = IntervalT2MF_Trapezoidal("IT2MF for medium urgency", MediumUMF, MediumLMF)
+        MediumMF = GenT2MF_Trapezoidal("GT2MF for medium urgency", primer=MediumIT2MF, numberOfzLevels=self.numberOfzLevels)
 
-        SeriousUMF = T1MF_Trapezoidal("Upper MF for serious level", [5 * seg, 6 * seg, 7 * seg+0.001, 8 * seg])
-        SeriousLMF = T1MF_Trapezoidal("Lower MF for serious level", [5 * seg, 6 * seg, 7 * seg, 8 * seg])
-        SeriousIT2MF = IntervalT2MF_Trapezoidal("IT2MF for serious level",SeriousUMF,SeriousLMF)
-        SeriousMF = GenT2MF_Trapezoidal("GT2MF for serious level", primer = SeriousIT2MF, numberOfzLevels = self.numberOfzLevels)
+        HighUMF = T1MF_Trapezoidal("Upper MF for high urgency", [3 * seg, 4 * seg, 5 * seg + 0.001, 6 * seg])
+        HighLMF = T1MF_Trapezoidal("Lower MF for high urgency", [3 * seg, 4 * seg, 5 * seg, 6 * seg])
+        HighIT2MF = IntervalT2MF_Trapezoidal("IT2MF for high urgency", HighUMF, HighLMF)
+        HighMF = GenT2MF_Trapezoidal("GT2MF for high urgency", primer=HighIT2MF, numberOfzLevels=self.numberOfzLevels)
 
-        SevereUMF = T1MF_Trapezoidal("Upper MF for severe level", [7 * seg, 8 * seg, 9 * seg+0.001, 10 * seg])
-        SevereLMF = T1MF_Trapezoidal("Lower MF for severe level", [7 * seg, 8 * seg, 9 * seg, 10 * seg])
-        SevereIT2MF = IntervalT2MF_Trapezoidal("IT2MF for severe level",SevereUMF,SevereLMF)
-        SevereMF = GenT2MF_Trapezoidal("GT2MF for severe level", primer = SevereIT2MF, numberOfzLevels = self.numberOfzLevels)
+        CriticalUMF = T1MF_Trapezoidal("Upper MF for critical urgency", [5 * seg, 6 * seg, 7 * seg + 0.001, 8 * seg])
+        CriticalLMF = T1MF_Trapezoidal("Lower MF for critical urgency", [5 * seg, 6 * seg, 7 * seg, 8 * seg])
+        CriticalIT2MF = IntervalT2MF_Trapezoidal("IT2MF for critical urgency", CriticalUMF, CriticalLMF)
+        CriticalMF = GenT2MF_Trapezoidal("GT2MF for critical urgency", primer=CriticalIT2MF, numberOfzLevels=self.numberOfzLevels)
 
-        # Life_threateningUMF = T1MF_Trapezoidal("Upper MF for life_threatening level", [9 * seg, 10 * seg, 11 * seg+0.001, 12 * seg])
-        # Life_threateningLMF = T1MF_Trapezoidal("Lower MF for life_threatening level", [9 * seg, 10 * seg, 11 * seg, 12 * seg])
-        # Life_threateningIT2MF = IntervalT2MF_Trapezoidal("IT2MF for life_threatening level",Life_threateningUMF,Life_threateningLMF)
-        # Life_threateningMF = GenT2MF_Trapezoidal("GT2MF for life_threatening level", primer = Life_threateningIT2MF, numberOfzLevels = self.numberOfzLevels)
-
-        # CriticalUMF = T1MF_Trapezoidal("Upper MF for critical level", [11 * seg, 12 * seg, 13 * seg+0.001, 13 * seg])
-        # CriticalLMF = T1MF_Trapezoidal("Lower MF for critical level", [11 * seg, 12 * seg, 13 * seg, 13 * seg])
-        # CriticalIT2MF = IntervalT2MF_Trapezoidal("IT2MF for critical level",CriticalUMF,CriticalLMF)
-        # CriticalMF = GenT2MF_Trapezoidal("GT2MF for critical level", primer = CriticalIT2MF, numberOfzLevels = self.numberOfzLevels)
+        EmergencyUMF = T1MF_Trapezoidal("Upper MF for emergency urgency", [7 * seg, 8 * seg, 100, 100])
+        EmergencyLMF = T1MF_Trapezoidal("Lower MF for emergency urgency", [7 * seg, 8 * seg + 0.001, 100, 100])
+        EmergencyIT2MF = IntervalT2MF_Trapezoidal("IT2MF for emergency urgency", EmergencyUMF, EmergencyLMF)
+        EmergencyMF = GenT2MF_Trapezoidal("GT2MF for emergency urgency", primer=EmergencyIT2MF, numberOfzLevels=self.numberOfzLevels)
 
         # Set up the antecedents and consequents
         # Temperature
@@ -121,8 +115,8 @@ class Case1:
 
         # Headache
         Slightly = GenT2_Antecedent("no headache", SlightlyMF, self.headache)
-        MildH = GenT2_Antecedent("mild headache", MildHMF, self.headache)
-        SevereH = GenT2_Antecedent("severe headache", SevereHMF, self.headache)
+        Mild = GenT2_Antecedent("mild headache", MildMF, self.headache)
+        Severe = GenT2_Antecedent("severe headache", SevereMF, self.headache)
 
         # Age
         Young = GenT2_Antecedent("young age", YoungMF, self.age)
@@ -130,44 +124,42 @@ class Case1:
         Old = GenT2_Antecedent("old age", OldMF, self.age)
 
         # Urgency
-        Stable =  GenT2_Consequent("Stable", StableMF, self.urgency)
-        Mild =  GenT2_Consequent("Mild", MildMF, self.urgency)
-        Moderate =  GenT2_Consequent("Moderate", ModerateMF, self.urgency)
-        Serious =  GenT2_Consequent("Serious",  SeriousMF, self.urgency)
-        Severe =  GenT2_Consequent("Severe",  SevereMF, self.urgency)
-        # Life_threatening =  GenT2_Consequent("Life_threatening",  Life_threateningMF, self.urgency)
-        # Critical =  GenT2_Consequent("Critical",  CriticalMF, self.urgency)
+        Low =  GenT2_Consequent("low", LowMF, self.urgency)
+        Medium =  GenT2_Consequent("medium", MediumMF, self.urgency)
+        High =  GenT2_Consequent("high", HighMF, self.urgency)
+        Critical =  GenT2_Consequent("critical",  CriticalMF, self.urgency)
+        Emergency =  GenT2_Consequent("emergency",  EmergencyMF, self.urgency)
         
         
         # Set up the rulebase and add rules
         self.rulebase = GenT2_Rulebase()
-        self.rulebase.addRule(GenT2_Rule([Normal, Slightly, Young], consequent = Stable)) #Rule 1
-        self.rulebase.addRule(GenT2_Rule([Normal, Slightly, Mid], consequent = Stable)) #Rule 2
-        self.rulebase.addRule(GenT2_Rule([Normal, Slightly, Old], consequent = Stable)) #Rule 3
-        self.rulebase.addRule(GenT2_Rule([Normal, MildH, Young], consequent = Mild)) # Rule 4
-        self.rulebase.addRule(GenT2_Rule([Normal, MildH, Mid], consequent = Mild)) # Rule 5
-        self.rulebase.addRule(GenT2_Rule([Normal, MildH, Old], consequent = Moderate)) # Rule 6
-        self.rulebase.addRule(GenT2_Rule([Normal, SevereH, Young], consequent = Moderate)) # Rule 7
-        self.rulebase.addRule(GenT2_Rule([Normal, SevereH, Mid], consequent = Moderate)) # Rule 8
-        self.rulebase.addRule(GenT2_Rule([Normal, SevereH, Old], consequent = Severe)) # Rule 9
-        self.rulebase.addRule(GenT2_Rule([Hot, Slightly, Young], consequent = Mild)) # Rule 10
-        self.rulebase.addRule(GenT2_Rule([Hot, Slightly, Mid], consequent = Mild)) # Rule 11
-        self.rulebase.addRule(GenT2_Rule([Hot, Slightly, Old], consequent = Moderate)) # Rule 12
-        self.rulebase.addRule(GenT2_Rule([Hot, MildH, Young], consequent = Moderate)) # Rule 13
-        self.rulebase.addRule(GenT2_Rule([Hot, MildH, Mid], consequent = Moderate)) # Rule 14
-        self.rulebase.addRule(GenT2_Rule([Hot, MildH, Old], consequent = Serious)) # Rule 15
-        self.rulebase.addRule(GenT2_Rule([Hot, SevereH, Young], consequent = Serious)) # Rule 16
-        self.rulebase.addRule(GenT2_Rule([Hot, SevereH, Mid], consequent = Severe)) # Rule 17
-        self.rulebase.addRule(GenT2_Rule([Hot, SevereH, Old], consequent = Severe)) # Rule 18
-        self.rulebase.addRule(GenT2_Rule([Cold, Slightly, Young], consequent = Moderate)) # Rule 19
-        self.rulebase.addRule(GenT2_Rule([Cold, Slightly, Mid], consequent = Moderate)) # Rule 20
-        self.rulebase.addRule(GenT2_Rule([Cold, Slightly, Old], consequent = Serious)) # Rule 21
-        self.rulebase.addRule(GenT2_Rule([Cold, MildH, Young], consequent = Serious)) # Rule 22
-        self.rulebase.addRule(GenT2_Rule([Cold, MildH, Mid], consequent = Serious)) # Rule 23
-        self.rulebase.addRule(GenT2_Rule([Cold, MildH, Old], consequent = Severe)) # Rule 24
-        self.rulebase.addRule(GenT2_Rule([Cold, SevereH, Young], consequent = Severe)) # Rule 25
-        self.rulebase.addRule(GenT2_Rule([Cold, SevereH, Mid], consequent = Severe)) # Rule 26
-        self.rulebase.addRule(GenT2_Rule([Cold, SevereH, Old], consequent = Severe)) # Rule 27
+        self.rulebase.addRule(GenT2_Rule([Normal, Slightly, Young], consequent = Low)) #Rule 1
+        self.rulebase.addRule(GenT2_Rule([Normal, Slightly, Mid], consequent = Low)) #Rule 2
+        self.rulebase.addRule(GenT2_Rule([Normal, Slightly, Old], consequent = Low)) #Rule 3
+        self.rulebase.addRule(GenT2_Rule([Normal, Mild, Young], consequent = Medium)) # Rule 4
+        self.rulebase.addRule(GenT2_Rule([Normal, Mild, Mid], consequent = Medium)) # Rule 5
+        self.rulebase.addRule(GenT2_Rule([Normal, Mild, Old], consequent = High)) # Rule 6
+        self.rulebase.addRule(GenT2_Rule([Normal, Severe, Young], consequent = High)) # Rule 7
+        self.rulebase.addRule(GenT2_Rule([Normal, Severe, Mid], consequent = High)) # Rule 8
+        self.rulebase.addRule(GenT2_Rule([Normal, Severe, Old], consequent = Emergency)) # Rule 9
+        self.rulebase.addRule(GenT2_Rule([Hot, Slightly, Young], consequent = Medium)) # Rule 10
+        self.rulebase.addRule(GenT2_Rule([Hot, Slightly, Mid], consequent = Medium)) # Rule 11
+        self.rulebase.addRule(GenT2_Rule([Hot, Slightly, Old], consequent = High)) # Rule 12
+        self.rulebase.addRule(GenT2_Rule([Hot, Mild, Young], consequent = High)) # Rule 13
+        self.rulebase.addRule(GenT2_Rule([Hot, Mild, Mid], consequent = High)) # Rule 14
+        self.rulebase.addRule(GenT2_Rule([Hot, Mild, Old], consequent = Critical)) # Rule 15
+        self.rulebase.addRule(GenT2_Rule([Hot, Severe, Young], consequent = Critical)) # Rule 16
+        self.rulebase.addRule(GenT2_Rule([Hot, Severe, Mid], consequent = Emergency)) # Rule 17
+        self.rulebase.addRule(GenT2_Rule([Hot, Severe, Old], consequent = Emergency)) # Rule 18
+        self.rulebase.addRule(GenT2_Rule([Cold, Slightly, Young], consequent = High)) # Rule 19
+        self.rulebase.addRule(GenT2_Rule([Cold, Slightly, Mid], consequent = High)) # Rule 20
+        self.rulebase.addRule(GenT2_Rule([Cold, Slightly, Old], consequent = Critical)) # Rule 21
+        self.rulebase.addRule(GenT2_Rule([Cold, Mild, Young], consequent = Critical)) # Rule 22
+        self.rulebase.addRule(GenT2_Rule([Cold, Mild, Mid], consequent = Critical)) # Rule 23
+        self.rulebase.addRule(GenT2_Rule([Cold, Mild, Old], consequent = Emergency)) # Rule 24
+        self.rulebase.addRule(GenT2_Rule([Cold, Severe, Young], consequent = Emergency)) # Rule 25
+        self.rulebase.addRule(GenT2_Rule([Cold, Severe, Mid], consequent = Emergency)) # Rule 26
+        self.rulebase.addRule(GenT2_Rule([Cold, Severe, Old], consequent = Emergency)) # Rule 27
 
          # input function
         while True:
@@ -190,25 +182,23 @@ class Case1:
 
         
 
-        self.Result(Patienttemperature,Patientheadache,Patientage)
-        # self.Result(36.5,0,25)
-        # self.Result(36.5,0,100)
-        # self.Result(38,0,25)
-        # self.Result(38,0,70)
-        # self.Result(36.5,6,40)
-        # self.Result(36.5,6,70)
-        # self.Result(30,0,10)
-        # self.Result(30,0,55)
-        # self.Result(27,9,25)
-        # self.Result(36.5,2,60)
-
-
-        # Plot the MF
-        self.plotMFs("Temperature Membership Functions",[HotMF, ColdMF, NormalMF], self.temperature.getDomain(), 100, True, True)
-        self.plotMFs("Headache Membership Functions",[SlightlyMF, MildHMF, SevereHMF], self.headache.getDomain(), 100, True, True)
-        self.plotMFs("Age Membership Functions",[YoungMF, MidMF, OldMF], self.age.getDomain(), 100, True, True)
-        self.plotMFs("Urgency Membership Functions",[StableMF, MildMF, ModerateMF, SeriousMF, SevereMF], self.urgency.getDomain(), 100, True, True)
+        # self.Result(Patienttemperature,Patientheadache,Patientage)
         
+        self.Result(36.5, 1, 20)  # Peak Data Sample Rule 1
+
+
+
+
+
+        # Plot the Membership Function in 3D
+        # self.plotGen2MF3D("Headache Membership Functions",[SlightlyMF, MildMF, SevereMF], self.headache.getDomain(), 100, True, True)
+        # self.plotGen2MF3D("Age Membership Functions",[YoungMF, MidMF, OldMF], self.age.getDomain(), 100, True, True)
+        
+        # plot the Membership Function in 2D
+        self.plotT1MFs("Temperature Membership Functions",[ColdUMF, NormalUMF, HotUMF], self.temperature.getDomain(), 200)
+        self.plotGen2MF2D("Headache Membership Functions",[SlightlyUMF, SlightlyLMF, MildUMF, MildLMF, SevereUMF, SevereLMF], self.headache.getDomain(), 200)
+        self.plotGen2MF2D("Age Membership Functions",[YoungUMF, YoungLMF, MidUMF, MidLMF, OldUMF, OldLMF], self.age.getDomain(), 200)
+        self.plotT1MFs("Urgency Membership Functions",[LowUMF, MediumUMF, HighUMF, CriticalUMF, EmergencyUMF], self.urgency.getDomain(), 200)
         
 
         if not unit:
@@ -228,15 +218,51 @@ class Case1:
         print("Using centroid type reduction, the zSlices based general type-2 FLS recommends a"
                 + "urgency of: "+str(self.rulebase.evaluate(1)[self.urgency]))
         
-        print("Centroid of the output for TIP (based on centroid type reduction):")
-        centroid = self.rulebase.evaluateGetCentroid(1)
-        centroidUrgency = list(centroid[self.urgency])
-        centroidUrgencyXValues = centroidUrgency[0]
-        centroidUrgencyYValues = centroidUrgency[1]
-        for zLevel in range(len(centroidUrgencyXValues)):
-            print(centroidUrgencyXValues[zLevel].toString()+" at y= "+str(centroidUrgencyYValues[zLevel]))
-    
-    def plotMFs(self,name,sets,xAxisRange,discretizationLevel,plotAsLines,plotAsSurface):
+        # print("Centroid of the output for TIP (based on centroid type reduction):")
+        # centroid = self.rulebase.evaluateGetCentroid(1)
+        # centroidUrgency = list(centroid[self.urgency])
+        # centroidUrgencyXValues = centroidUrgency[0]
+        # centroidUrgencyYValues = centroidUrgency[1]
+        # for zLevel in range(len(centroidUrgencyXValues)):
+        #     print(centroidUrgencyXValues[zLevel].toString()+" at y= "+str(centroidUrgencyYValues[zLevel]))
+
+
+    def plotT1MFs(self,name,sets,xAxisRange,discretizationLevel):
+        """Plot the lines for each membership function of the sets"""
+        self.plot.figure()
+        self.plot.title(name)
+        for i in range(len(sets)):
+            self.plot.plotMF(name.replace("Membership Functions",""),sets[i].getName(),sets[i],discretizationLevel,xAxisRange,Tuple(0.0,1.05),False)
+        self.plot.legend()
+
+    def plotGen2MF2D(self, name, sets, xAxisRange, discretizationLevel):
+        """Plot the lines for each membership function of the sets"""
+        self.plot.figure()
+        self.plot.title(name)
+        
+        
+        for i in range(0, len(sets), 2): 
+            upper_set = sets[i] 
+            lower_set = sets[i+1] 
+            
+            # plot the upper membership function
+            self.plot.plotMF(name.replace("Membership Functions",""), upper_set.getName(), upper_set, discretizationLevel, xAxisRange, Tuple(0.0, 1.05),False)
+            
+            # plot the lower membership function
+            self.plot.plotMF(name.replace("Membership Functions",""), lower_set.getName(), lower_set, discretizationLevel, xAxisRange, Tuple(0.0, 1.05),False)
+            
+            x = self.plot.discretize(upper_set.getSupport(), discretizationLevel)
+            y_upper = [upper_set.getFS(xi) for xi in x]
+            y_lower = [lower_set.getFS(xi) for xi in x]
+            
+            # fill the area between the upper and lower membership functions
+            plt.fill_between(x, y_upper, y_lower, color='gray', alpha=0.5)  # Adjust color and transparency
+
+        self.plot.legend()
+
+
+
+    def plotGen2MF3D(self,name,sets,xAxisRange,discretizationLevel,plotAsLines,plotAsSurface):
         """Plot the lines for each membership function of the sets"""
         if plotAsLines:
             self.plot.figure3d()
