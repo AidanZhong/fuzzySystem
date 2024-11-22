@@ -2,7 +2,6 @@ from juzzyPython.generic.Tuple import Tuple
 from juzzyPython.generic.Output import Output
 from juzzyPython.generic.Input import Input
 from juzzyPython.generic.Plot import Plot
-from juzzyPython.type1.sets.T1MF_Interface import T1MF_Interface
 from juzzyPython.generalType2zSlices.system.GenT2_Rule import GenT2_Rule
 from juzzyPython.generalType2zSlices.system.GenT2_Rulebase import GenT2_Rulebase
 from juzzyPython.generalType2zSlices.system.GenT2_Antecedent import GenT2_Antecedent
@@ -17,7 +16,7 @@ import matplotlib.pyplot as plt
 
 class Case1:
     def __init__(self,unit = False) -> None:
-        self.numberOfzLevels = 4
+        self.numberOfzLevels = 5
     
 
         # Inputs to the FLS
@@ -36,8 +35,8 @@ class Case1:
         ColdIT2MF = IntervalT2MF_Trapezoidal("IT2MF for cold temperature",ColdUMF,ColdLMF)
         ColdMF = GenT2MF_Trapezoidal("GT2MF for cold temperature", primer = ColdIT2MF, numberOfzLevels = self.numberOfzLevels)
         
-        NormalUMF = T1MF_Trapezoidal("Upper MF for normal temperature", [35.0, 36.4, 36.6, 38.0])
-        NormalLMF = T1MF_Trapezoidal("Lower MF for normal temperature", [35.001, 36.4, 36.6, 38.0])
+        NormalUMF = T1MF_Trapezoidal("Upper MF for normal temperature", [35.0, 35.8, 36.9, 38.0])
+        NormalLMF = T1MF_Trapezoidal("Lower MF for normal temperature", [35.001, 35.8, 36.9, 38.0])
         NormalIT2MF = IntervalT2MF_Trapezoidal("IT2MF for normal temperature",NormalUMF,NormalLMF)
         NormalMF = GenT2MF_Trapezoidal("GT2MF for normal temperature", primer = NormalIT2MF, numberOfzLevels = self.numberOfzLevels)
         
@@ -183,8 +182,37 @@ class Case1:
         
 
         # self.Result(Patienttemperature,Patientheadache,Patientage)
-        
-        self.Result(36.5, 1, 20)  # Peak Data Sample Rule 1
+
+        # self.Result(37.8, 4.5, 31)     # Non-Peak Data Sample Rule 1
+        # self.Result(37.5, 3.9, 44.5)   # Non-Peak Data Sample Rule 2
+        # self.Result(35.6, 3.0, 64)     # Non-Peak Data Sample Rule 3
+        # self.Result(37.8, 5.9, 24)     # Non-Peak Data Sample Rule 4
+        # self.Result(37.5, 5.5, 62)     # Non-Peak Data Sample Rule 5
+        # self.Result(35.6, 3.7, 66)     # Non-Peak Data Sample Rule 6
+        # self.Result(37.8, 7.0, 38)     # Non-Peak Data Sample Rule 7
+        # self.Result(37.5, 5.5, 43.7)   # Non-Peak Data Sample Rule 8
+        # self.Result(35.6, 6.1, 68.5)   # Non-Peak Data Sample Rule 9
+
+        # self.Result(37.3, 4.5, 31)     # Non-Peak Data Sample Rule 10
+        # self.Result(37.7, 3.9, 44.5)   # Non-Peak Data Sample Rule 11
+        # self.Result(36.9, 3.0, 64)     # Non-Peak Data Sample Rule 12
+        # self.Result(37.3, 5.9, 24)     # Non-Peak Data Sample Rule 13
+        # self.Result(37.7, 5.5, 62)     # Non-Peak Data Sample Rule 14
+        # self.Result(36.9, 3.7, 66)     # Non-Peak Data Sample Rule 15
+        # self.Result(37.3, 7.0, 38)     # Non-Peak Data Sample Rule 16
+        # self.Result(37.7, 5.5, 43.7)   # Non-Peak Data Sample Rule 17
+        # self.Result(36.9, 6.1, 68.5)   # Non-Peak Data Sample Rule 18
+
+        self.Result(36.1, 4.5, 31)     # Non-Peak Data Sample Rule 19
+        self.Result(35.3, 3.9, 44.5)   # Non-Peak Data Sample Rule 20
+        self.Result(35.7, 3.0, 64)     # Non-Peak Data Sample Rule 21
+        self.Result(36.1, 5.9, 24)     # Non-Peak Data Sample Rule 22
+        self.Result(35.3, 5.5, 62)     # Non-Peak Data Sample Rule 23
+        self.Result(35.7, 3.7, 66)   # Non-Peak Data Sample Rule 24
+        self.Result(36.1, 7.0, 38)     # Non-Peak Data Sample Rule 25
+        self.Result(35.3, 5.5, 43.7)   # Non-Peak Data Sample Rule 26
+        self.Result(35.7, 6.1, 68.5)   # Non-Peak Data Sample Rule 27
+
 
 
 
@@ -195,10 +223,10 @@ class Case1:
         # self.plotGen2MF3D("Age Membership Functions",[YoungMF, MidMF, OldMF], self.age.getDomain(), 100, True, True)
         
         # plot the Membership Function in 2D
-        self.plotT1MFs("Temperature Membership Functions",[ColdUMF, NormalUMF, HotUMF], self.temperature.getDomain(), 200)
-        self.plotGen2MF2D("Headache Membership Functions",[SlightlyUMF, SlightlyLMF, MildUMF, MildLMF, SevereUMF, SevereLMF], self.headache.getDomain(), 200)
-        self.plotGen2MF2D("Age Membership Functions",[YoungUMF, YoungLMF, MidUMF, MidLMF, OldUMF, OldLMF], self.age.getDomain(), 200)
-        self.plotT1MFs("Urgency Membership Functions",[LowUMF, MediumUMF, HighUMF, CriticalUMF, EmergencyUMF], self.urgency.getDomain(), 200)
+        # self.plotT1MFs("Temperature Membership Functions",[ColdUMF, NormalUMF, HotUMF], self.temperature.getDomain(), 200)
+        # self.plotGen2MF2D("Headache Membership Functions",[SlightlyUMF, SlightlyLMF, MildUMF, MildLMF, SevereUMF, SevereLMF], self.headache.getDomain(), 200)
+        # self.plotGen2MF2D("Age Membership Functions",[YoungUMF, YoungLMF, MidUMF, MidLMF, OldUMF, OldLMF], self.age.getDomain(), 200)
+        # self.plotT1MFs("Urgency Membership Functions",[LowUMF, MediumUMF, HighUMF, CriticalUMF, EmergencyUMF], self.urgency.getDomain(), 200)
         
 
         if not unit:
