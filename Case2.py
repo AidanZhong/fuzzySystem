@@ -338,9 +338,9 @@ class Case2:
 if __name__ == "__main__":
     # Case2()
     # Define intervals for temperature, headache, and age
-    temperature_interval = (36.0, 37.5)
-    headache_interval = (2.0, 5.0)
-    age_interval = (20, 30)
+    temperature_interval = (36.4, 36.6)
+    headache_interval = (0.0, 2.0)
+    age_interval = (0, 17)
 
     # Calculate and print the results for interval inputs
     case = Case2(unit=True)  # Initialize the fuzzy system
