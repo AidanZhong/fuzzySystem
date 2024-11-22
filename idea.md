@@ -122,3 +122,10 @@ Aggregate the membership values of all points in the interval, using:
 2. Average membership
 3. Integration
 Use the aggregated value into the inference system
+
+suppose range is [a,b], and for crispy input of a and b, the membership value will be[a_l, a_u] and [b_l, b_u]
+
+- if the peak point is inside of the range, output should be [min(a_l, b_l), 1]
+- otherwise, output should be [min(a_l, b_l), max(a_u, b_u)]
+
+downside: if the distribution is not normal(maybe 99% of almost 0 membership value, but 1% have high membership, the upper bound of the range is still 1)
