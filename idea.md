@@ -113,4 +113,12 @@ https://www.england.nhs.uk/guidance-for-emergency-departments-initial-assessment
 9. T = 27, H = 9, A = 25
 10. T = 36.5, H = 2, A = 60
 
-
+# Interval input
+suppose the input is the range of [a,b]
+treat the range as a set of points. Consider each point is a crispy input.
+For each crispy input, compute the degree of membership function to the fuzzy system.
+Aggregate the membership values of all points in the interval, using:
+1. Maximum membership
+2. Average membership
+3. Integration
+Use the aggregated value into the inference system
