@@ -30,11 +30,11 @@ class Case2:
 
         # Set up the membership functions (MFs) for each input and output
         # Temperature
-        self.OldUMF = T1MF_Trapezoidal("Upper MF for cold temperature", [24.0, 24.0, 35.001, 36.4])
-        self.OldLMF = T1MF_Trapezoidal("Lower MF for cold temperature", [24.0, 24.0, 35.0, 36.4])
-        self.OldIT2MF = IntervalT2MF_Trapezoidal("IT2MF for cold temperature", self.OldUMF,
-                                                 self.OldLMF)
-        self.OldMF = GenT2MF_Trapezoidal("GT2MF for cold temperature", primer=self.OldIT2MF,
+        self.coldUMF = T1MF_Trapezoidal("Upper MF for cold temperature", [24.0, 24.0, 35.001, 36.4])
+        self.coldLMF = T1MF_Trapezoidal("Lower MF for cold temperature", [24.0, 24.0, 35.0, 36.4])
+        self.coldIT2MF = IntervalT2MF_Trapezoidal("IT2MF for cold temperature", self.coldUMF,
+                                                 self.coldLMF)
+        self.coldMF = GenT2MF_Trapezoidal("GT2MF for cold temperature", primer=self.coldIT2MF,
                                          numberOfzLevels=self.numberOfzLevels)
 
         self.NormalUMF = T1MF_Trapezoidal("Upper MF for normal temperature", [35.0, 36.4, 36.6, 38.0])
@@ -125,7 +125,7 @@ class Case2:
 
         # Set up the antecedents and consequents
         # Temperature
-        Cold = GenT2_Antecedent("cold temperature", self.OldMF, self.temperature)
+        Cold = GenT2_Antecedent("cold temperature", self.coldMF, self.temperature)
         Normal = GenT2_Antecedent("normal temperature", self.NormalMF, self.temperature)
         Hot = GenT2_Antecedent("hot temperature", self.HotMF, self.temperature)
 
