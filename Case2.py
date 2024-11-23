@@ -291,7 +291,7 @@ class Case2:
         return ans_centroid
 
     def Result_for_interval_using_fixed_step(self, function, temperature_interval, headache_interval, age_interval,
-                                             step=0.1):
+                                             total_steps_for_each_var):
         """
         Calculate the centroid of the output f(x, y, z) over the given input intervals using fixed step size.
         :param function: The function defining the output (f(x, y, z)).
@@ -302,14 +302,17 @@ class Case2:
         :return: The centroid of the output (ans_centroid).
         """
         (a_x, b_x), (a_y, b_y), (a_z, b_z) = temperature_interval, headache_interval, age_interval
+        step_x = (b_x - a_x) / total_steps_for_each_var
+        step_y = (b_y - a_y) / total_steps_for_each_var
+        step_z = (b_z - a_z) / total_steps_for_each_var
 
         # Create the grid points for each interval with the specified step size
-        x_points = np.arange(a_x, b_x + step, step)
-        y_points = np.arange(a_y, b_y + step, step)
-        z_points = np.arange(a_z, b_z + step, step)
+        x_points = np.arange(a_x, b_x + step_x, step_x)
+        y_points = np.arange(a_y, b_y + step_y, step_y)
+        z_points = np.arange(a_z, b_z + step_z, step_z)
 
         # Step sizes for the intervals
-        dx, dy, dz = step, step, step
+        dx, dy, dz = step_x, step_y, step_z
 
         # Initialize total output and total volume
         total_output = 0.0
@@ -417,6 +420,6 @@ if __name__ == "__main__":
     # Calculate and print the results for interval inputs
     case = Case2(unit=True)  # Initialize the fuzzy system
     print(case.Result_for_interval_using_fixed_step(case.Result_with_centroid_type_reduction, temperature_interval,
-                                                    headache_interval, age_interval, step=0.1))
+                                                    headache_interval, age_interval, total_steps_for_each_var=5))
     # print(case.Result_for_interval_using_centroid(case.Result_with_height_center_type_reduction, temperature_interval,
     #                                               headache_interval, age_interval))
