@@ -19,9 +19,9 @@ class Case2:
         self.numberOfzLevels = 4
 
         # Inputs to the FLS
-        self.temperature = Input("temperature", Tuple(24, 44))
-        self.headache = Input("headache", Tuple(0, 10))
-        self.age = Input("age", Tuple(0, 130))
+        self.temperature = Input("temperature", Tuple(23.99, 44.01))
+        self.headache = Input("headache", Tuple(0, 10.01))
+        self.age = Input("age", Tuple(0, 130.01))
         # Output
         self.urgency = Output(("urgency"), Tuple(0, 100))
 
@@ -283,9 +283,9 @@ class Case2:
         step_z = (b_z - a_z) / total_steps_for_each_var
 
         # Create the grid points for each interval with the specified step size
-        x_points = np.arange(a_x, b_x + step_x, step_x)
-        y_points = np.arange(a_y, b_y + step_y, step_y)
-        z_points = np.arange(a_z, b_z + step_z, step_z)
+        x_points = np.arange(a_x, b_x, step_x)
+        y_points = np.arange(a_y, b_y, step_y)
+        z_points = np.arange(a_z, b_z, step_z)
 
         # Step sizes for the intervals
         dx, dy, dz = step_x, step_y, step_z
@@ -334,7 +334,7 @@ class Case2:
         self.headache.setInput(headache_level)
         self.age.setInput(age_level)
         ans = self.rulebase.evaluate(1)[self.urgency]
-        print(temperture_level, headache_level, age_level, ans)
+        # print(temperture_level, headache_level, age_level, ans)
         return ans
 
     def plotT1MFs(self, name, sets, xAxisRange, discretizationLevel):
@@ -386,16 +386,48 @@ class Case2:
                 self.plot.plotMFasSurface(sets[i].getName(), sets[i], xAxisRange, discretizationLevel, False)
 
 
+def peak_data():
+    # Peak intervals for each input
+    temperature_intervals = [
+        (24, 35),  # Cold
+        (36.4, 36.9),  # Normal
+        (38, 44)  # Hot
+    ]
+    headache_intervals = [
+        (0, 2),  # Mild
+        (4, 6),  # Moderate
+        (8, 10)  # Severe
+    ]
+    age_intervals = [
+        (0, 10),  # Child
+        (19, 60),  # Adult
+        (70, 130)  # Elderly
+    ]
+    case = Case2(unit=False)
+    for temp in temperature_intervals:
+        for head in headache_intervals:
+            for age in age_intervals:
+                try:
+                    res = case.Result_for_interval_using_fixed_step(case.Result_with_centroid_type_reduction, temp, head,
+                                                                    age,
+                                                                    total_steps_for_each_var=5)
+                    print(f"Temperature:{temp}, Headache:{head}, Age:{age}, result: {res}")
+                except Exception as e:
+                    print(e)
+                    continue
+
+
 if __name__ == "__main__":
+    peak_data()
     # Case2()
     # Define intervals for temperature, headache, and age
-    temperature_interval = (36.4, 36.6)
-    headache_interval = (0.0, 2.0)
-    age_interval = (16, 17)
-
-    # Calculate and print the results for interval inputs
-    case = Case2(unit=True)  # Initialize the fuzzy system
-    print(case.Result_for_interval_using_fixed_step(case.Result_with_centroid_type_reduction, temperature_interval,
-                                                    headache_interval, age_interval, total_steps_for_each_var=5))
-    # print(case.Result_for_interval_using_centroid(case.Result_with_height_center_type_reduction, temperature_interval,
-    #                                               headache_interval, age_interval))
+    # temperature_interval = (36.4, 36.6)
+    # headache_interval = (0.0, 2.0)
+    # age_interval = (16, 17)
+    #
+    # # Calculate and print the results for interval inputs
+    # case = Case2(unit=True)  # Initialize the fuzzy system
+    # print(case.Result_for_interval_using_fixed_step(case.Result_with_centroid_type_reduction, temperature_interval,
+    #                                                 headache_interval, age_interval, total_steps_for_each_var=5))
+    # # print(case.Result_for_interval_using_centroid(case.Result_with_height_center_type_reduction, temperature_interval,
+    # #                                               headache_interval, age_interval))
