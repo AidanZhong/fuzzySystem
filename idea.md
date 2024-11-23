@@ -94,8 +94,24 @@ https://www.myguideforseniors.com/what-age-is-considered-senior-citizen/2020_fal
 old lower:
 https://pubmed.ncbi.nlm.nih.gov/1727842/
 
-urgency:
+Age:
+https://onlinelibrary.wiley.com/doi/full/10.1111/sji.12413
+
+# urgency
 https://www.england.nhs.uk/guidance-for-emergency-departments-initial-assessment/
+https://pmc.ncbi.nlm.nih.gov/articles/PMC5412135/
+https://www.who.int/health-topics/adolescent-health#tab=tab_1
+https://en.wikipedia.org/wiki/Age_of_majority
+
+# headache
+https://www.elsevier.es/en-revista-neurologia-english-edition--495-articulo-headache-what-ask-how-examine-S2173580821000134
+https://link.springer.com/article/10.1186/s12873-018-0189-y?fromPaywallRec=false
+
+# Temperature
+https://www.nhs.uk/conditions/fever-in-adults/
+https://my.clevelandclinic.org/health/diseases/21164-hypothermia-low-body-temperature
+https://health.clevelandclinic.org/body-temperature-what-is-and-isnt-normal
+
 
 # Data sample
 1. T = 36.5, H = 0, A = 25
