@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 from juzzyPython.generalType2zSlices.sets.GenT2MF_Gaussian import GenT2MF_Gaussian
 from juzzyPython.generalType2zSlices.sets.GenT2MF_Trapezoidal import GenT2MF_Trapezoidal
 from juzzyPython.generalType2zSlices.system.GenT2_Antecedent import GenT2_Antecedent
@@ -13,6 +14,7 @@ from juzzyPython.intervalType2.sets.IntervalT2MF_Gaussian import IntervalT2MF_Ga
 from juzzyPython.intervalType2.sets.IntervalT2MF_Trapezoidal import IntervalT2MF_Trapezoidal
 from juzzyPython.type1.sets.T1MF_Gaussian import T1MF_Gaussian
 from juzzyPython.type1.sets.T1MF_Trapezoidal import T1MF_Trapezoidal
+from scipy.integrate import tplquad
 
 
 class Case2:
@@ -32,10 +34,9 @@ class Case2:
         # Temperature
         self.coldUMF = T1MF_Trapezoidal("Upper MF for cold temperature", [24.0, 24.0, 35.001, 36.4])
         self.coldLMF = T1MF_Trapezoidal("Lower MF for cold temperature", [24.0, 24.0, 35.0, 36.4])
-        self.coldIT2MF = IntervalT2MF_Trapezoidal("IT2MF for cold temperature", self.coldUMF,
-                                                 self.coldLMF)
+        self.coldIT2MF = IntervalT2MF_Trapezoidal("IT2MF for cold temperature", self.coldUMF, self.coldLMF)
         self.coldMF = GenT2MF_Trapezoidal("GT2MF for cold temperature", primer=self.coldIT2MF,
-                                         numberOfzLevels=self.numberOfzLevels)
+                                          numberOfzLevels=self.numberOfzLevels)
 
         self.NormalUMF = T1MF_Trapezoidal("Upper MF for normal temperature", [35.0, 36.4, 36.6, 38.0])
         self.NormalLMF = T1MF_Trapezoidal("Lower MF for normal temperature", [35.001, 36.4, 36.6, 38.0])
@@ -264,6 +265,69 @@ class Case2:
         min_val, max_val = interval
         return [min_val + i * (max_val - min_val) / (samples - 1) for i in range(samples)]
 
+    def Result_for_interval_using_centroid(self, function, temperature_interval, headache_interval, age_interval):
+        """
+        Calculate the centroid of the output f(x, y, z) over the given input intervals.
+        :param f: The function defining the output (f(x, y, z)).
+        :param intervals: A tuple of intervals ((a_x, b_x), (a_y, b_y), (a_z, b_z)).
+        :return: The centroid of the output (ans_centroid).
+        """
+        (a_x, b_x), (a_y, b_y), (a_z, b_z) = temperature_interval, headache_interval, age_interval
+
+        # Numerator: Total output
+        total_output, _ = tplquad(
+            function,
+            a_z, b_z,  # z limits (innermost)
+            lambda z: a_y, lambda z: b_y,  # y limits (middle)
+            lambda z, y: a_x, lambda z, y: b_x,  # x limits (outermost)
+        )
+
+        # Denominator: Input volume
+        input_volume = (b_x - a_x) * (b_y - a_y) * (b_z - a_z)
+
+        # Output centroid
+        ans_centroid = total_output / input_volume
+
+        return ans_centroid
+
+    def Result_for_interval_using_fixed_step(self, function, temperature_interval, headache_interval, age_interval,
+                                             step=0.1):
+        """
+        Calculate the centroid of the output f(x, y, z) over the given input intervals using fixed step size.
+        :param function: The function defining the output (f(x, y, z)).
+        :param temperature_interval: Interval for temperature (a_x, b_x).
+        :param headache_interval: Interval for headache (a_y, b_y).
+        :param age_interval: Interval for age (a_z, b_z).
+        :param step: Step size for the integration.
+        :return: The centroid of the output (ans_centroid).
+        """
+        (a_x, b_x), (a_y, b_y), (a_z, b_z) = temperature_interval, headache_interval, age_interval
+
+        # Create the grid points for each interval with the specified step size
+        x_points = np.arange(a_x, b_x + step, step)
+        y_points = np.arange(a_y, b_y + step, step)
+        z_points = np.arange(a_z, b_z + step, step)
+
+        # Step sizes for the intervals
+        dx, dy, dz = step, step, step
+
+        # Initialize total output and total volume
+        total_output = 0.0
+        total_volume = 0.0
+
+        # Perform nested summation to approximate the integral
+        for x in x_points:
+            for y in y_points:
+                for z in z_points:
+                    volume_element = dx * dy * dz  # Volume of each small cuboid
+                    total_output += function(x, y, z) * volume_element
+                    total_volume += volume_element
+
+        # Compute the centroid
+        ans_centroid = total_output / total_volume
+
+        return ans_centroid
+
     def Result(self, temperture_level, headache_level, age_level) -> None:
         """Calculate the output based on the two inputs"""
         self.temperature.setInput(temperture_level)
@@ -278,13 +342,21 @@ class Case2:
         print("Using centroid type reduction, the zSlices based general type-2 FLS recommends a"
               + "urgency of: " + str(self.rulebase.evaluate(1)[self.urgency]))
 
-        # print("Centroid of the output for TIP (based on centroid type reduction):")
-        # centroid = self.rulebase.evaluateGetCentroid(1)
-        # centroidUrgency = list(centroid[self.urgency])
-        # centroidUrgencyXValues = centroidUrgency[0]
-        # centroidUrgencyYValues = centroidUrgency[1]
-        # for zLevel in range(len(centroidUrgencyXValues)):
-        #     print(centroidUrgencyXValues[zLevel].toString()+" at y= "+str(centroidUrgencyYValues[zLevel]))
+    def Result_with_height_center_type_reduction(self, temperture_level, headache_level, age_level):
+        """Calculate the output based on the two inputs"""
+        self.temperature.setInput(temperture_level)
+        self.headache.setInput(headache_level)
+        self.age.setInput(age_level)
+        return self.rulebase.evaluate(0)[self.urgency]
+
+    def Result_with_centroid_type_reduction(self, temperture_level, headache_level, age_level):
+        """Calculate the output based on the two inputs"""
+        self.temperature.setInput(temperture_level)
+        self.headache.setInput(headache_level)
+        self.age.setInput(age_level)
+        ans = self.rulebase.evaluate(1)[self.urgency]
+        print(temperture_level, headache_level, age_level, ans)
+        return ans
 
     def plotT1MFs(self, name, sets, xAxisRange, discretizationLevel):
         """Plot the lines for each membership function of the sets"""
@@ -340,8 +412,11 @@ if __name__ == "__main__":
     # Define intervals for temperature, headache, and age
     temperature_interval = (36.4, 36.6)
     headache_interval = (0.0, 2.0)
-    age_interval = (0, 17)
+    age_interval = (16, 17)
 
     # Calculate and print the results for interval inputs
     case = Case2(unit=True)  # Initialize the fuzzy system
-    case.ResultForInterval(temperature_interval, headache_interval, age_interval, samples=5)
+    print(case.Result_for_interval_using_fixed_step(case.Result_with_centroid_type_reduction, temperature_interval,
+                                                    headache_interval, age_interval, step=0.1))
+    # print(case.Result_for_interval_using_centroid(case.Result_with_height_center_type_reduction, temperature_interval,
+    #                                               headache_interval, age_interval))
