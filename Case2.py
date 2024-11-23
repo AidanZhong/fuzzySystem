@@ -196,28 +196,6 @@ class Case2:
 
         self.Result(Patienttemperature, Patientheadache, Patientage)
 
-        # Plot the Membership Function in 3D
-        # self.plotGen2MF3D("Headache Membership Functions",[self.SlightlyMF, self.MildMF, self.SevereMF], self.headache.getDomain(), 100, True, True)
-        # self.plotGen2MF3D("Age Membership Functions",[self.YoungMF, self.MidMF, self.OldMF], self.age.getDomain(), 100, True, True)
-
-        # plot the Membership Function in 2D
-        self.plotT1MFs("Temperature Membership Functions", [self.OldUMF, self.NormalUMF, self.HotUMF],
-                       self.temperature.getDomain(),
-                       200)
-        self.plotGen2MF2D("Headache Membership Functions",
-                          [self.SlightlyUMF, self.SlightlyLMF, self.MildUMF, self.MildLMF, self.SevereUMF,
-                           self.SevereLMF], self.headache.getDomain(),
-                          200)
-        self.plotGen2MF2D("Age Membership Functions",
-                          [self.YoungUMF, self.YoungLMF, self.MidUMF, self.MidLMF, self.OldUMF, self.OldLMF],
-                          self.age.getDomain(), 200)
-        self.plotT1MFs("Urgency Membership Functions",
-                       [self.LowUMF, self.MediumUMF, self.HighUMF, self.CriticalUMF, self.EmergencyUMF],
-                       self.urgency.getDomain(), 200)
-
-        if not unit:
-            self.plot.show()
-
     def ResultForInterval(self, temperature_interval, headache_interval, age_interval, samples=10):
         """
         Calculate the output based on interval inputs by sampling and aggregating.
@@ -264,8 +242,10 @@ class Case2:
     def Result_for_interval_using_centroid(self, function, temperature_interval, headache_interval, age_interval):
         """
         Calculate the centroid of the output f(x, y, z) over the given input intervals.
-        :param f: The function defining the output (f(x, y, z)).
-        :param intervals: A tuple of intervals ((a_x, b_x), (a_y, b_y), (a_z, b_z)).
+        :param function: The function defining the output (f(x, y, z)).
+        :param temperature_interval: A tuple of intervals ((a_x, b_x), (a_y, b_y), (a_z, b_z)).
+        :param headache_interval: Tuple (min_headache, max_headache)
+        :param age_interval: Tuple (min_age, max_age)
         :return: The centroid of the output (ans_centroid).
         """
         (a_x, b_x), (a_y, b_y), (a_z, b_z) = temperature_interval, headache_interval, age_interval
@@ -294,7 +274,7 @@ class Case2:
         :param temperature_interval: Interval for temperature (a_x, b_x).
         :param headache_interval: Interval for headache (a_y, b_y).
         :param age_interval: Interval for age (a_z, b_z).
-        :param step: Step size for the integration.
+        :param total_steps_for_each_var: total_steps_for_each_var
         :return: The centroid of the output (ans_centroid).
         """
         (a_x, b_x), (a_y, b_y), (a_z, b_z) = temperature_interval, headache_interval, age_interval
