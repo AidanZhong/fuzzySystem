@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from juzzyPython.generalType2zSlices.sets.GenT2MF_Gaussian import GenT2MF_Gaussian
 from juzzyPython.generalType2zSlices.sets.GenT2MF_Trapezoidal import GenT2MF_Trapezoidal
 from juzzyPython.generalType2zSlices.system.GenT2_Antecedent import GenT2_Antecedent
 from juzzyPython.generalType2zSlices.system.GenT2_Consequent import GenT2_Consequent
@@ -10,9 +9,7 @@ from juzzyPython.generic.Input import Input
 from juzzyPython.generic.Output import Output
 from juzzyPython.generic.Plot import Plot
 from juzzyPython.generic.Tuple import Tuple
-from juzzyPython.intervalType2.sets.IntervalT2MF_Gaussian import IntervalT2MF_Gaussian
 from juzzyPython.intervalType2.sets.IntervalT2MF_Trapezoidal import IntervalT2MF_Trapezoidal
-from juzzyPython.type1.sets.T1MF_Gaussian import T1MF_Gaussian
 from juzzyPython.type1.sets.T1MF_Trapezoidal import T1MF_Trapezoidal
 from scipy.integrate import tplquad
 
@@ -30,16 +27,15 @@ class Case2:
 
         self.plot = Plot()
 
-        # Set up the membership functions (MFs) for each input and output
         # Temperature
-        self.coldUMF = T1MF_Trapezoidal("Upper MF for cold temperature", [24.0, 24.0, 35.001, 36.4])
-        self.coldLMF = T1MF_Trapezoidal("Lower MF for cold temperature", [24.0, 24.0, 35.0, 36.4])
-        self.coldIT2MF = IntervalT2MF_Trapezoidal("IT2MF for cold temperature", self.coldUMF, self.coldLMF)
-        self.coldMF = GenT2MF_Trapezoidal("GT2MF for cold temperature", primer=self.coldIT2MF,
+        self.ColdUMF = T1MF_Trapezoidal("Upper MF for coldly temperature", [24.0, 24.0, 35.001, 36.4])
+        self.ColdLMF = T1MF_Trapezoidal("Lower MF for coldly temperature", [24.0, 24.0, 35.0, 36.4])
+        self.ColdIT2MF = IntervalT2MF_Trapezoidal("IT2MF for coldly temperature", self.ColdUMF, self.ColdLMF)
+        self.ColdMF = GenT2MF_Trapezoidal("GT2MF for coldly temperature", primer=self.ColdIT2MF,
                                           numberOfzLevels=self.numberOfzLevels)
 
-        self.NormalUMF = T1MF_Trapezoidal("Upper MF for normal temperature", [35.0, 36.4, 36.6, 38.0])
-        self.NormalLMF = T1MF_Trapezoidal("Lower MF for normal temperature", [35.001, 36.4, 36.6, 38.0])
+        self.NormalUMF = T1MF_Trapezoidal("Upper MF for normal temperature", [35.0, 36.4, 36.9, 38.0])
+        self.NormalLMF = T1MF_Trapezoidal("Lower MF for normal temperature", [35.001, 36.4, 36.9, 38.0])
         self.NormalIT2MF = IntervalT2MF_Trapezoidal("IT2MF for normal temperature", self.NormalUMF, self.NormalLMF)
         self.NormalMF = GenT2MF_Trapezoidal("GT2MF for normal temperature", primer=self.NormalIT2MF,
                                             numberOfzLevels=self.numberOfzLevels)
@@ -51,17 +47,17 @@ class Case2:
                                          numberOfzLevels=self.numberOfzLevels)
 
         # Headache
-        self.SlightlyUMF = T1MF_Trapezoidal("Upper MF for slightly headache", [0.0, 0.0, 3.0, 5.0])
-        self.SlightlyLMF = T1MF_Trapezoidal("Lower MF for slightly headache", [0.0, 0.0, 2.0, 5.0])
-        self.SlightlyIT2MF = IntervalT2MF_Trapezoidal("IT2MF for slightly headache", self.SlightlyUMF, self.SlightlyLMF)
-        self.SlightlyMF = GenT2MF_Trapezoidal("GT2MF for slightly headache", primer=self.SlightlyIT2MF,
-                                              numberOfzLevels=self.numberOfzLevels)
+        self.MildUMF = T1MF_Trapezoidal("Upper MF for mild headache", [0.0, 0.0, 3.0, 5.0])
+        self.MildLMF = T1MF_Trapezoidal("Lower MF for mild headache", [0.0, 0.0, 2.0, 5.0])
+        self.MildIT2MF = IntervalT2MF_Trapezoidal("IT2MF for mild headache", self.MildUMF, self.MildLMF)
+        self.MildMF = GenT2MF_Trapezoidal("GT2MF for mild headache", primer=self.MildIT2MF,
+                                          numberOfzLevels=self.numberOfzLevels)
 
-        self.MildUMF = T1MF_Gaussian("Upper MF for mild headache", 5.0, 1)
-        self.MildLMF = T1MF_Gaussian("Lower MF for mild headache", 5.0, 0.5)
-        self.MildIT2MF = IntervalT2MF_Gaussian("IT2MF for mild headache", self.MildUMF, self.MildLMF)
-        self.MildMF = GenT2MF_Gaussian("GT2MF for mild headache", primer=self.MildIT2MF,
-                                       numberOfzLevels=self.numberOfzLevels)
+        self.ModerateUMF = T1MF_Trapezoidal("Upper MF for moderate headache", [3.0, 4.0, 6.0, 7.0])
+        self.ModerateLMF = T1MF_Trapezoidal("Upper MF for moderate headache", [3.0, 5.0, 5.0, 7.0])
+        self.ModerateIT2MF = IntervalT2MF_Trapezoidal("IT2MF for moderate headache", self.ModerateUMF, self.ModerateLMF)
+        self.ModerateMF = GenT2MF_Trapezoidal("GT2MF for moderate headache", primer=self.ModerateIT2MF,
+                                              numberOfzLevels=self.numberOfzLevels)
 
         self.SevereUMF = T1MF_Trapezoidal("Upper MF for severe headache", [5.0, 7.0, 10.0, 10.0])
         self.SevereLMF = T1MF_Trapezoidal("Lower MF for severe headache", [5.0, 8.0, 10.0, 10.0])
@@ -70,23 +66,23 @@ class Case2:
                                             numberOfzLevels=self.numberOfzLevels)
 
         # Age
-        self.YoungUMF = T1MF_Trapezoidal("Upper MF for young age", [0.0, 0.0, 22.0, 45.0])
-        self.YoungLMF = T1MF_Trapezoidal("Lower MF for young age", [0.0, 0.0, 17.0, 40.0])
-        self.YoungIT2MF = IntervalT2MF_Trapezoidal("IT2MF for young age", self.YoungUMF, self.YoungLMF)
-        self.YoungMF = GenT2MF_Trapezoidal("GT2MF for young age", primer=self.YoungIT2MF,
+        self.ChildUMF = T1MF_Trapezoidal("Upper MF for child", [0.0, 0.0, 12.0, 19.0])
+        self.ChildLMF = T1MF_Trapezoidal("Lower MF for child", [0.0, 0.0, 10.0, 19.0])
+        self.ChildIT2MF = IntervalT2MF_Trapezoidal("IT2MF for child", self.ChildUMF, self.ChildLMF)
+        self.ChildMF = GenT2MF_Trapezoidal("GT2MF for child", primer=self.ChildIT2MF,
                                            numberOfzLevels=self.numberOfzLevels)
 
-        self.MidUMF = T1MF_Trapezoidal("Upper MF for mid age", [40.0, 45.0, 60.0, 65.0])
-        self.MidLMF = T1MF_Trapezoidal("Lower MF for mid age", [45.0, 45.001, 60.0, 60.001])
-        self.MidIT2MF = IntervalT2MF_Trapezoidal("IT2MF for mid age", self.MidUMF, self.MidLMF)
-        self.MidMF = GenT2MF_Trapezoidal("GT2MF for mid age", primer=self.MidIT2MF,
-                                         numberOfzLevels=self.numberOfzLevels)
+        self.AdultUMF = T1MF_Trapezoidal("Upper MF for adult", [10.0, 19.0, 65.0, 70.0])
+        self.AdultLMF = T1MF_Trapezoidal("Lower MF for adult", [12.0, 19.0, 60.0, 70.0])
+        self.AdultIT2MF = IntervalT2MF_Trapezoidal("IT2MF for adult", self.AdultUMF, self.AdultLMF)
+        self.AdultMF = GenT2MF_Trapezoidal("GT2MF for adult", primer=self.AdultIT2MF,
+                                           numberOfzLevels=self.numberOfzLevels)
 
-        self.OldUMF = T1MF_Trapezoidal("Upper MF for old age", [60.0, 70.0, 130.0, 130.0])
-        self.OldLMF = T1MF_Trapezoidal("Lower MF for old age", [65.0, 70.0, 130.0, 130.0])
-        self.OldIT2MF = IntervalT2MF_Trapezoidal("IT2MF for old age", self.OldUMF, self.OldLMF)
-        self.OldMF = GenT2MF_Trapezoidal("GT2MF for old age", primer=self.OldIT2MF,
-                                         numberOfzLevels=self.numberOfzLevels)
+        self.ElderlyUMF = T1MF_Trapezoidal("Upper MF for elderly", [60.0, 70.0, 130.0, 130.0])
+        self.ElderlyLMF = T1MF_Trapezoidal("Lower MF for elderly", [65.0, 70.0, 130.0, 130.0])
+        self.ElderlyIT2MF = IntervalT2MF_Trapezoidal("IT2MF for elderly", self.ElderlyUMF, self.ElderlyLMF)
+        self.ElderlyMF = GenT2MF_Trapezoidal("GT2MF for elderly", primer=self.ElderlyIT2MF,
+                                             numberOfzLevels=self.numberOfzLevels)
 
         # Urgency Levels
         number_of_labels = 5
