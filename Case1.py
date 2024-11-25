@@ -35,8 +35,8 @@ class Case1:
         ColdIT2MF = IntervalT2MF_Trapezoidal("IT2MF for coldly temperature",ColdUMF,ColdLMF)
         ColdMF = GenT2MF_Trapezoidal("GT2MF for coldly temperature", primer = ColdIT2MF, numberOfzLevels = self.numberOfzLevels)
         
-        NormalUMF = T1MF_Trapezoidal("Upper MF for normal temperature", [35.0, 36.4, 36.9, 38.0])
-        NormalLMF = T1MF_Trapezoidal("Lower MF for normal temperature", [35.001, 36.4, 36.9, 38.0])
+        NormalUMF = T1MF_Trapezoidal("Upper MF for normal temperature", [35.0, 36.4, 36.901, 38.0])
+        NormalLMF = T1MF_Trapezoidal("Lower MF for normal temperature", [35.0, 36.4, 36.9, 38.0])
         NormalIT2MF = IntervalT2MF_Trapezoidal("IT2MF for normal temperature",NormalUMF,NormalLMF)
         NormalMF = GenT2MF_Trapezoidal("GT2MF for normal temperature", primer = NormalIT2MF, numberOfzLevels = self.numberOfzLevels)
         
@@ -181,7 +181,7 @@ class Case1:
 
         
 
-        # self.Result(Patienttemperature,Patientheadache,Patientage)
+        self.Result(Patienttemperature,Patientheadache,Patientage)
         # self.Result(36.0, 2.5, 13.5)   # Non-Peak Data Sample Rule 1
         # self.Result(37.0, 3.0, 66.5)   # Non-Peak Data Sample Rule 2
         # self.Result(37.3, 3.5, 67)     # Non-Peak Data Sample Rule 3
@@ -200,15 +200,15 @@ class Case1:
         # self.Result(37.7, 7.5, 13.5)     # Non-Peak Data Sample Rule 16
         # self.Result(37.9, 6.5, 66.5)   # Non-Peak Data Sample Rule 17
         # self.Result(37.4, 7.0, 67)     # Non-Peak Data Sample Rule 18
-        self.Result(35.7, 2.5, 11)   # Non-Peak Data Sample Rule 19
-        self.Result(35.1, 3.0, 63.5)   # Non-Peak Data Sample Rule 20
-        self.Result(35.4, 3.5, 69)     # Non-Peak Data Sample Rule 21
-        self.Result(35.7, 6.0, 13.5)     # Non-Peak Data Sample Rule 22
-        self.Result(35.1, 6.3, 66.5)   # Non-Peak Data Sample Rule 23
-        self.Result(35.4, 3.8, 67)     # Non-Peak Data Sample Rule 24
-        self.Result(35.7, 7.5, 15)     # Non-Peak Data Sample Rule 25
-        self.Result(35.1, 6.5, 16.5)   # Non-Peak Data Sample Rule 26
-        self.Result(35.4, 7.0, 68)     # Non-Peak Data Sample Rule 27
+        # self.Result(35.7, 2.5, 11)   # Non-Peak Data Sample Rule 19
+        # self.Result(35.1, 3.0, 63.5)   # Non-Peak Data Sample Rule 20
+        # self.Result(35.4, 3.5, 69)     # Non-Peak Data Sample Rule 21
+        # self.Result(35.7, 6.0, 13.5)     # Non-Peak Data Sample Rule 22
+        # self.Result(35.1, 6.3, 66.5)   # Non-Peak Data Sample Rule 23
+        # self.Result(35.4, 3.8, 67)     # Non-Peak Data Sample Rule 24
+        # self.Result(35.7, 7.5, 15)     # Non-Peak Data Sample Rule 25
+        # self.Result(35.1, 6.5, 16.5)   # Non-Peak Data Sample Rule 26
+        # self.Result(35.4, 7.0, 68)     # Non-Peak Data Sample Rule 27
 
 
 
@@ -216,13 +216,13 @@ class Case1:
 
 
         # Plot the Membership Function in 3D
-        # self.plotGen2MF3D("Headache Membership Functions",[MildMF, ModerateMF, SevereMF], self.headache.getDomain(), 100, True, True)
-        # self.plotGen2MF3D("Age Membership Functions",[YoungMF, AdultMF, ElderlyMF], self.age.getDomain(), 100, True, True)
+        self.plotGen2MF3D("Headache Membership Functions",[MildMF, ModerateMF, SevereMF], self.headache.getDomain(), 100, True, True)
+        self.plotGen2MF3D("Age Membership Functions",[ChildMF, AdultMF, ElderlyMF], self.age.getDomain(), 100, True, True)
         
         # plot the Membership Function in 2D
-        # self.plotT1MFs("Temperature Membership Functions",[ColdUMF, NormalUMF, HotUMF], self.temperature.getDomain(), 200)
-        # self.plotGen2MF2D("Headache Membership Functions",[MildUMF, MildLMF, ModerateUMF, ModerateLMF, SevereUMF, SevereLMF], self.headache.getDomain(), 200)
-        # self.plotGen2MF2D("Age Membership Functions",[ChildUMF, ChildLMF, AdultUMF, AdultLMF, ElderlyUMF, ElderlyLMF], self.age.getDomain(), 200)
+        self.plotT1MFs("Temperature Membership Functions",[ColdUMF, NormalUMF, HotUMF], self.temperature.getDomain(), 200)
+        self.plotGen2MF2D("Headache Membership Functions",[MildUMF, MildLMF, ModerateUMF, ModerateLMF, SevereUMF, SevereLMF], self.headache.getDomain(), 200)
+        self.plotGen2MF2D("Age Membership Functions",[ChildUMF, ChildLMF, AdultUMF, AdultLMF, ElderlyUMF, ElderlyLMF], self.age.getDomain(), 200)
         self.plotT1MFs("Urgency Membership Functions",[LowUMF, MediumUMF, HighUMF, CriticalUMF, EmergencyUMF], self.urgency.getDomain(), 200)
         
 
