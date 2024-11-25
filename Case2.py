@@ -148,12 +148,12 @@ class Case2:
         self.rulebase.addRule(GenT2_Rule([Normal, Mild, Child], consequent=Low))  # Rule 1
         self.rulebase.addRule(GenT2_Rule([Normal, Mild, Adult], consequent=Low))  # Rule 2
         self.rulebase.addRule(GenT2_Rule([Normal, Mild, Elderly], consequent=Low))  # Rule 3
-        self.rulebase.addRule(GenT2_Rule([Normal, Moderate, Child], consequent=High))  # Rule 4
+        self.rulebase.addRule(GenT2_Rule([Normal, Moderate, Child], consequent=Medium))  # Rule 4
         self.rulebase.addRule(GenT2_Rule([Normal, Moderate, Adult], consequent=Medium))  # Rule 5
         self.rulebase.addRule(GenT2_Rule([Normal, Moderate, Elderly], consequent=High))  # Rule 6
         self.rulebase.addRule(GenT2_Rule([Normal, Severe, Child], consequent=Critical))  # Rule 7
         self.rulebase.addRule(GenT2_Rule([Normal, Severe, Adult], consequent=Critical))  # Rule 8
-        self.rulebase.addRule(GenT2_Rule([Normal, Severe, Elderly], consequent=Emergency))  # Rule 9
+        self.rulebase.addRule(GenT2_Rule([Normal, Severe, Elderly], consequent=Critical))  # Rule 9
         self.rulebase.addRule(GenT2_Rule([Hot, Mild, Child], consequent=Medium))  # Rule 10
         self.rulebase.addRule(GenT2_Rule([Hot, Mild, Adult], consequent=Medium))  # Rule 11
         self.rulebase.addRule(GenT2_Rule([Hot, Mild, Elderly], consequent=High))  # Rule 12
@@ -166,7 +166,7 @@ class Case2:
         self.rulebase.addRule(GenT2_Rule([Cold, Mild, Child], consequent=High))  # Rule 19
         self.rulebase.addRule(GenT2_Rule([Cold, Mild, Adult], consequent=Medium))  # Rule 20
         self.rulebase.addRule(GenT2_Rule([Cold, Mild, Elderly], consequent=High))  # Rule 21
-        self.rulebase.addRule(GenT2_Rule([Cold, Moderate, Child], consequent=Critical))  # Rule 22
+        self.rulebase.addRule(GenT2_Rule([Cold, Moderate, Child], consequent=Emergency))  # Rule 22
         self.rulebase.addRule(GenT2_Rule([Cold, Moderate, Adult], consequent=Critical))  # Rule 23
         self.rulebase.addRule(GenT2_Rule([Cold, Moderate, Elderly], consequent=Emergency))  # Rule 24
         self.rulebase.addRule(GenT2_Rule([Cold, Severe, Child], consequent=Emergency))  # Rule 25
@@ -408,7 +408,8 @@ def peak_data():
         for head in headache_intervals:
             for age in age_intervals:
                 try:
-                    res = case.Result_for_interval_using_fixed_step(case.Result_with_centroid_type_reduction, temp, head,
+                    res = case.Result_for_interval_using_fixed_step(case.Result_with_centroid_type_reduction, temp,
+                                                                    head,
                                                                     age,
                                                                     total_steps_for_each_var=5)
                     print(f"Temperature:{temp}, Headache:{head}, Age:{age}, result: {res}")
