@@ -434,7 +434,7 @@ def peak_data():
 
 def check_data_valid(temp, headache, age):
     if len(temp) != 2 or len(headache) != 2 or len(age) != 2:
-        print('Too many arguments for interval')
+        print('It should be 2 numbers for an interval')
         return False
     if temp[0] > temp[1] or headache[0] > headache[1] or age[0] > age[1]:
         print('Upper bound of the interval should be larger than lower bound.')
