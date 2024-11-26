@@ -63,6 +63,7 @@ Healthy(peak 0, end 30), mild Severe(start in 20, peak 50 , end 80), Severe(peak
 
 # todos
 week1 (8/11 - 14/11)
+- [x] first version of type1 fuzzy set -- Aidan
 - [x] age -> type 2  -- Leo 
 - [x] do research on headache. Adjust Linguistic terms, determine type1 or type2  -- Aidan
 - [x] temperature, find the evidence  -- Aidan
@@ -73,7 +74,7 @@ week2 (15/11 - 21/11)
 - [x] interval input (case 2) -- Aidan
 - [x] create same sample data -- Leo 
 week3 (22/11 - 26/11)
-- [ ] finish the report
+- [x] finish the report -- Both
 
 # Juzzy lib resources
 https://github.com/LUCIDresearch/JuzzyPython/tree/main
