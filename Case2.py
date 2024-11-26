@@ -285,6 +285,13 @@ class Case2:
         :return: The centroid of the output (ans_centroid).
         """
         (a_x, b_x), (a_y, b_y), (a_z, b_z) = temperature_interval, headache_interval, age_interval
+        epsilon = 0.001
+        if b_x == a_x:
+            b_x += epsilon
+        if b_y == a_y:
+            b_y += epsilon
+        if b_z == a_z:
+            b_z += epsilon
         step_x = (b_x - a_x) / total_steps_for_each_var
         step_y = (b_y - a_y) / total_steps_for_each_var
         step_z = (b_z - a_z) / total_steps_for_each_var
