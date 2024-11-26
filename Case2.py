@@ -1,5 +1,13 @@
+"""
+Author: Qinkun Zhong (20702503), Tang Lok Wong (20221848)
+Date: 2024/11/26
+Description: Case2 main file
+"""
+
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy.integrate import tplquad
+
 from juzzyPython.generalType2zSlices.sets.GenT2MF_Trapezoidal import GenT2MF_Trapezoidal
 from juzzyPython.generalType2zSlices.system.GenT2_Antecedent import GenT2_Antecedent
 from juzzyPython.generalType2zSlices.system.GenT2_Consequent import GenT2_Consequent
@@ -11,7 +19,6 @@ from juzzyPython.generic.Plot import Plot
 from juzzyPython.generic.Tuple import Tuple
 from juzzyPython.intervalType2.sets.IntervalT2MF_Trapezoidal import IntervalT2MF_Trapezoidal
 from juzzyPython.type1.sets.T1MF_Trapezoidal import T1MF_Trapezoidal
-from scipy.integrate import tplquad
 
 
 class Case2:
@@ -418,17 +425,36 @@ def peak_data():
                     continue
 
 
+def check_data_valid(temp, headache, age):
+    if len(temp) != 2 or len(headache) != 2 or len(age) != 2:
+        print('Too many arguments for interval')
+        return False
+    if temp[0] > temp[1] or headache[0] > headache[1] or age[0] > age[1]:
+        print('Upper bound of the interval should be larger than lower bound.')
+        return False
+    if temp[0] < 24 or temp[1] > 44:
+        print('Invalid temperature')
+        return False
+    if headache[0] < 0 or headache[1] > 10:
+        print('Invalid headache level')
+        return False
+    if age[0] < 0 or age[1] > 130:
+        print('Invalid age')
+        return False
+    return True
+
+
 if __name__ == "__main__":
-    peak_data()
-    # Case2()
-    # Define intervals for temperature, headache, and age
-    # temperature_interval = (36.4, 36.6)
-    # headache_interval = (0.0, 2.0)
-    # age_interval = (16, 17)
-    #
-    # # Calculate and print the results for interval inputs
-    # case = Case2(unit=True)  # Initialize the fuzzy system
-    # print(case.Result_for_interval_using_fixed_step(case.Result_with_centroid_type_reduction, temperature_interval,
-    #                                                 headache_interval, age_interval, total_steps_for_each_var=5))
-    # # print(case.Result_for_interval_using_centroid(case.Result_with_height_center_type_reduction, temperature_interval,
-    # #                                               headache_interval, age_interval))
+    while True:
+        temperature = tuple(map(float, input('Please input the temperature interval (e.g. 36.2,36.7): ').split(',')))
+        headache_level = tuple(map(float, input('Please input the headache level (e.g. 5,10): ').split(',')))
+        age_level = tuple(map(float, input('Please input the age level (e.g. 10,20): ').split(',')))
+        if not check_data_valid(temperature, headache_level, age_level):
+            continue
+        case = Case2(unit=False)
+        print('Computing the urgency level...')
+        res = case.Result_for_interval_using_fixed_step(case.Result_with_centroid_type_reduction, temperature,
+                                                        headache_level,
+                                                        age_level,
+                                                        total_steps_for_each_var=5)
+        print(f"Temperature:{temperature}, Headache:{headache_level}, Age:{age_level}, result: {res}")

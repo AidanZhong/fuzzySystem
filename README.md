@@ -1,5 +1,8 @@
 # Fuzzy assignment1
 we used juzzy python library to implement it.
+You need to use anaconda environment to run the code.
+Run Case1.py to test case 1 input.
+Run Case2.py to test case 2 input.
 
 Case 1 and Case 2 are based on the same system. And case2datatest.ipynb shows the tests for case 2 (interval inputs).
 
