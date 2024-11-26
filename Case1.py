@@ -1,7 +1,7 @@
 """
 Author: Qinkun Zhong (20702503), Tang Lok Wong (20221848)
 Date: 2024/11/26
-Description: Case main file
+Description: Case1 main file
 """
 
 import matplotlib.pyplot as plt
