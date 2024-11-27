@@ -1,15 +1,20 @@
-# Fuzzy assignment1
+# Fuzzy assignment
 we used juzzy python library to implement it.
-You need to use anaconda environment to run the code.
-Run Case1.py to test case 1 input.
-Run Case2.py to test case 2 input.
+
+# Running step
+You could use anaconda environment to run the JuzzyPython code.
+
+Run Case1.py and input patient's body data in singleton to test case 1 input.
+
+Run Case2.py and input patient's body data in interval to test case 2 input.
 
 Case 1 and Case 2 are based on the same system. And case2datatest.ipynb shows the tests for case 2 (interval inputs).
 
 Case 1 -- Authored by Tang Lok Wong
 Case 2 -- Authored by Qinkun Zhong
 
-This is the detailed work load distribution
+
+# Work load distribution table
 week1 (8/11 - 14/11)
 - [x] first version of type1 fuzzy set -- Aidan
 - [x] age -> type 2  -- Leo 
