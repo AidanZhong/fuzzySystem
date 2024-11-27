@@ -285,13 +285,70 @@ class Case2:
         :return: The centroid of the output (ans_centroid).
         """
         (a_x, b_x), (a_y, b_y), (a_z, b_z) = temperature_interval, headache_interval, age_interval
-        epsilon = 0.001
-        if b_x == a_x:
-            b_x += epsilon
-        if b_y == a_y:
-            b_y += epsilon
-        if b_z == a_z:
-            b_z += epsilon
+
+        if b_x == a_x and b_y == a_y and b_z == a_z:
+            return function(a_x, a_y, a_z)
+        elif b_y == a_y and b_z == a_z:
+            dx = (b_x - a_x) / total_steps_for_each_var
+            x_points = np.arange(a_x, b_x, dx)
+            total_output = 0.0
+            total_volume = b_x - a_x
+            for x in x_points:
+                total_output += function(x, a_y, a_z) * dx
+            return total_output / total_volume
+        elif b_x == a_x and b_z == a_z:
+            dy = (b_y - a_y) / total_steps_for_each_var
+            y_points = np.arange(a_y, b_y, dy)
+            total_output = 0.0
+            total_volume = b_y - a_y
+            for y in y_points:
+                total_output += function(a_x, y, a_z) * dy
+            return total_output / total_volume
+        elif b_x == a_x and b_y == a_y:
+            dz = (b_z - a_z) / total_steps_for_each_var
+            z_points = np.arange(a_z, b_z, dz)
+            total_output = 0.0
+            total_volume = b_z - a_z
+            for z in z_points:
+                total_output += function(a_x, a_y, z) * dz
+            return total_output / total_volume
+        elif b_x == a_x:
+            dy = (b_y - a_y) / total_steps_for_each_var
+            dz = (b_z - a_z) / total_steps_for_each_var
+            y_points = np.arange(a_y, b_y, dy)
+            z_points = np.arange(a_z, b_z, dz)
+            total_output = 0.0
+            total_volume = 0.0
+            for y in y_points:
+                for z in z_points:
+                    total_output += function(a_x, y, z) * dy * dz
+                    total_volume += dy * dz
+            return total_output / total_volume
+        elif b_y == a_y:
+            dx = (b_x - a_x) / total_steps_for_each_var
+            dz = (b_z - a_z) / total_steps_for_each_var
+            x_points = np.arange(a_x, b_x, dx)
+            z_points = np.arange(a_z, b_z, dz)
+            total_output = 0.0
+            total_volume = 0.0
+            for x in x_points:
+                for z in z_points:
+                    total_output += function(x, a_y, z) * dx * dz
+                    total_volume += dx * dz
+            return total_output / total_volume
+        elif b_z == a_z:
+            dx = (b_x - a_x) / total_steps_for_each_var
+            dy = (b_y - a_y) / total_steps_for_each_var
+            x_points = np.arange(a_x, b_x, dx)
+            y_points = np.arange(a_y, b_y, dy)
+            total_output = 0.0
+            total_volume = 0.0
+            for x in x_points:
+                for y in y_points:
+                    total_output += function(x, y, a_z) * dx * dy
+                    total_volume += dx * dy
+            return total_output / total_volume
+
         step_x = (b_x - a_x) / total_steps_for_each_var
         step_y = (b_y - a_y) / total_steps_for_each_var
         step_z = (b_z - a_z) / total_steps_for_each_var
