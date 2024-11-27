@@ -145,12 +145,12 @@ class Case1:
         self.rulebase.addRule(GenT2_Rule([Normal, Mild, Child], consequent=Low))  # Rule 1
         self.rulebase.addRule(GenT2_Rule([Normal, Mild, Adult], consequent=Low))  # Rule 2
         self.rulebase.addRule(GenT2_Rule([Normal, Mild, Elderly], consequent=Low))  # Rule 3
-        self.rulebase.addRule(GenT2_Rule([Normal, Moderate, Child], consequent=High))  # Rule 4
+        self.rulebase.addRule(GenT2_Rule([Normal, Moderate, Child], consequent=Medium))  # Rule 4
         self.rulebase.addRule(GenT2_Rule([Normal, Moderate, Adult], consequent=Medium))  # Rule 5
         self.rulebase.addRule(GenT2_Rule([Normal, Moderate, Elderly], consequent=High))  # Rule 6
         self.rulebase.addRule(GenT2_Rule([Normal, Severe, Child], consequent=Critical))  # Rule 7
         self.rulebase.addRule(GenT2_Rule([Normal, Severe, Adult], consequent=Critical))  # Rule 8
-        self.rulebase.addRule(GenT2_Rule([Normal, Severe, Elderly], consequent=Emergency))  # Rule 9
+        self.rulebase.addRule(GenT2_Rule([Normal, Severe, Elderly], consequent=Critical))  # Rule 9
         self.rulebase.addRule(GenT2_Rule([Hot, Mild, Child], consequent=Medium))  # Rule 10
         self.rulebase.addRule(GenT2_Rule([Hot, Mild, Adult], consequent=Medium))  # Rule 11
         self.rulebase.addRule(GenT2_Rule([Hot, Mild, Elderly], consequent=High))  # Rule 12
@@ -163,7 +163,7 @@ class Case1:
         self.rulebase.addRule(GenT2_Rule([Cold, Mild, Child], consequent=High))  # Rule 19
         self.rulebase.addRule(GenT2_Rule([Cold, Mild, Adult], consequent=Medium))  # Rule 20
         self.rulebase.addRule(GenT2_Rule([Cold, Mild, Elderly], consequent=High))  # Rule 21
-        self.rulebase.addRule(GenT2_Rule([Cold, Moderate, Child], consequent=Critical))  # Rule 22
+        self.rulebase.addRule(GenT2_Rule([Cold, Moderate, Child], consequent=Emergency))  # Rule 22
         self.rulebase.addRule(GenT2_Rule([Cold, Moderate, Adult], consequent=Critical))  # Rule 23
         self.rulebase.addRule(GenT2_Rule([Cold, Moderate, Elderly], consequent=Emergency))  # Rule 24
         self.rulebase.addRule(GenT2_Rule([Cold, Severe, Child], consequent=Emergency))  # Rule 25
@@ -181,13 +181,13 @@ class Case1:
             Patientheadache = float(input("Enter patient's headache (0-10):"))
             if 0 <= Patientheadache <= 10:
                 break
-            print("Headache must be between 24 and 44. Please try again.")
+            print("Headache must be between 0 and 10. Please try again.")
 
         while True:
             Patientage = float(input("Enter patient's age (0-130):"))
             if 0 <= Patientage <= 130:
                 break
-            print("Temperture must be between 24 and 44. Please try again.")
+            print("Age must be between 0 and 130. Please try again.")
 
         self.Result(Patienttemperature, Patientheadache, Patientage)
         # self.Result(36.0, 2.5, 13.5)   # Non-Peak Data Sample Rule 1
@@ -247,18 +247,8 @@ class Case1:
         print("Patient's Temperture was: " + str(self.temperature.getInput()))
         print("Patient's Headache Level was: " + str(self.headache.getInput()))
         print("Patient's Age was: " + str(self.age.getInput()))
-        print("Using height center of sets type reduction, the zSlices based general type-2 FLS recommends a "
-              + "urgency of: " + str(self.rulebase.evaluate(0)[self.urgency]))
         print("Using centroid type reduction, the zSlices based general type-2 FLS recommends a"
               + "urgency of: " + str(self.rulebase.evaluate(1)[self.urgency]))
-
-        # print("Centroid of the output for TIP (based on centroid type reduction):")
-        # centroid = self.rulebase.evaluateGetCentroid(1)
-        # centroidUrgency = list(centroid[self.urgency])
-        # centroidUrgencyXValues = centroidUrgency[0]
-        # centroidUrgencyYValues = centroidUrgency[1]
-        # for zLevel in range(len(centroidUrgencyXValues)):
-        #     print(centroidUrgencyXValues[zLevel].toString()+" at y= "+str(centroidUrgencyYValues[zLevel]))
 
     def plotT1MFs(self, name, sets, xAxisRange, discretizationLevel):
         """Plot the lines for each membership function of the sets"""
